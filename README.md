@@ -60,27 +60,31 @@ git clone https://github.com/needful0612/ecoMeter.git
 cd ecoMeter/
 ```
 
-### get the dataset needed
-```bash
-python get_dataset.py
-```
-you should now see a data folder with a csv file pop up
-
 ### start the venv
 ```bash
 python3.12 -m venv venv
 source venv/bin/activate
 ```
-you should see your terminal has (venv) prefix by now
+you should see your terminal has (venv) prefix
 
 ### install dependencies
-uv init might not be needed
+**uv init** might not be needed,
 ctrl+c to skip if the process stalled and just pip install requirements
 ```bash
 pip install uv
+```
+```bash
 uv init
+```
+```bash
 uv pip install -r requirements.txt
 ```
+
+### get the dataset needed
+```bash
+python get_dataset.py
+```
+now there should be a data folder pop up with csv file in it
 
 ### run the scripts
 say if you run this under venv
@@ -104,9 +108,42 @@ once notebook tab is up,you can freely run then notebook inside.
 or you could use vscode notebook extension
 
 ## How to run Container
+check if docker is running
+```bash
+docker -v
+```
+build the image
 ```bash
 docker build -t energy-api .
+```
+run the container
+```bash
 docker run -d --name named_container -p 8000:8000 energy-api
+```
+after this you can run the test below
+
+## How to shut down the container
+check what containers are running
+```bash
+docker ps -l
+```
+find the container with NAME named_container(or whatever you named it)
+```bash
+docker stop named_container
+```
+additionally you can remove it
+```bash
+docker stop named_container
+```
+
+## How to remove the image
+check available images
+```bash
+docker image ls
+```
+delete the image with REPOSITORY energy-api(or whatever you named it)
+```bash
+docker image rm energy-api
 ```
 
 ## How to Test
