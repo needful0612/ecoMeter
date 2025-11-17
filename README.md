@@ -56,8 +56,8 @@ python3.12 --version
 ```
 
 ```bash
-git clone energy_prediction
-cd energy_prediction/
+git clone https://github.com/needful0612/ecoMeter.git
+cd ecoMeter/
 ```
 
 ### start the venv
@@ -71,7 +71,7 @@ you should see your terminal has (venv) prefix by now
 ```bash
 pip install uv
 uv init
-uv pip install -r reuqirements.txt
+uv pip install -r requirements.txt
 ```
 
 ### run the scripts
@@ -83,7 +83,7 @@ you should see model.pkl inside
 
 after you finish the training
 ```bash
-python deployment/app.py
+uvicorn deployment.app:app --reload --host 0.0.0.0 --port 8000
 ```
 you should be able to curl to test it
 for how to test,see below
