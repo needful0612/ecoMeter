@@ -60,6 +60,12 @@ git clone https://github.com/needful0612/ecoMeter.git
 cd ecoMeter/
 ```
 
+### get the dataset needed
+```bash
+python get_dataset.py
+```
+you should now see a data folder with a csv file pop up
+
 ### start the venv
 ```bash
 python3.12 -m venv venv
@@ -68,6 +74,8 @@ source venv/bin/activate
 you should see your terminal has (venv) prefix by now
 
 ### install dependencies
+uv init might not be needed
+ctrl+c to skip if the process stalled and just pip install requirements
 ```bash
 pip install uv
 uv init
