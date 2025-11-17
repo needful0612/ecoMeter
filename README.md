@@ -127,7 +127,7 @@ check what containers are running
 ```bash
 docker ps -l
 ```
-find the container with NAME named_container(or whatever you named it)
+find the container with NAME **named_container**(or whatever you named it)
 ```bash
 docker stop named_container
 ```
@@ -141,7 +141,7 @@ check available images
 ```bash
 docker image ls
 ```
-delete the image with REPOSITORY energy-api(or whatever you named it)
+delete the image with REPOSITORY **energy-api**(or whatever you named it)
 ```bash
 docker image rm energy-api
 ```
