@@ -12,10 +12,45 @@ ecoMeter/
 │   └── energy_prediction.ipynb
 ├── Dockerfile
 ├── main.py
+├── get_dataset.py
 ├── README.md
 ├── requirements.txt
 └── pyproject.toml
 ```
+The project includes:
+
+1. **deployment/**
+   - `app.py` — FastAPI service that loads and serves the trained model (`model.pkl`)
+   - `training.py` — Script to download data, train the model, and generate `model.pkl`
+   - `requirements.txt` — requirements for container environment
+
+2. **notebooks/**
+   - `eda.ipynb` — Exploratory Data Analysis: understanding dataset, distributions, correlations, and patterns  
+   - `energy_prediction.ipynb` — Model experimentation and evaluation notebook (baseline models, tuning, comparisons)
+
+3. **Dockerfile**
+   - Defines the container environment for running the FastAPI model server; allows deployment to cloud platforms (GCP, AWS, etc.)
+
+4. **pyproject.toml**
+   - Project metadata + dependency configuration for `uv`  
+   - **If this file exists, you do *not* need to run `uv init` again.**
+
+5. **requirements.txt**
+   - Python dependencies required to run the project locally.
+
+6. **get_dataset.py**
+   - Utility script for downloading and placing the dataset into the `data/` directory if it is not already present.
+
+> **Note:**  
+> This list highlights the most relevant files involved in running, training, and deploying the project.  
+> Additional files and folders may exist in the repository but are not required for basic usage.
+
+As for the dataset,this project use Appliances Energy Prediction dataset.  
+```bash
+https://archive.ics.uci.edu/dataset/374/appliances+energy+prediction
+```
+for how to get the dataset, please refer to **[get the dataset needed](#get-the-dataset-needed)** section.   
+
 ## Problem Description
 
 In today’s world, ESG (Environmental, Social, and Governance) considerations are becoming increasingly important as industries seek sustainable growth. Many hotels are exploring ways to reduce energy consumption by implementing low-energy infrastructure.
@@ -31,12 +66,6 @@ The predictions allow hotels to:
 - **Provide guidance on adjusting room configurations** to maximize energy efficiency
 
 Ultimately, the project provides a **data-driven approach** for hotels to monitor, optimize, and reduce their electricity consumption.
-
-The project includes:
-
-1. **Notebooks**: EDA and model experiments
-2. **Deployment scripts**: FastAPI application and training pipeline
-3. **Containerization**: Dockerfile for easy deployment to cloud platforms (GCP, AWS, etc.)
 
 ## How to Run This project
 
@@ -68,21 +97,28 @@ source venv/bin/activate
 you should see your terminal has (venv) prefix
 
 ### install dependencies
-**uv init** might not be needed,
-ctrl+c to skip if the process stalled and just pip install requirements
 ```bash
 pip install uv
 ```
 ```bash
-uv init
-```
-```bash
 uv pip install -r requirements.txt
+```
+if you don't see pyproject.toml run
+```bash
+uv init
 ```
 
 ### get the dataset needed
+you can use the script here
 ```bash
 python get_dataset.py
+```
+or you can use command below,download & extract dataset into data folder
+```bash
+mkdir -p data
+wget -P data https://archive.ics.uci.edu/static/public/374/appliances+energy+prediction.zip
+unzip data/appliances+energy+prediction.zip -d data/
+rm data/appliances+energy+prediction.zip
 ```
 now there should be a data folder pop up with csv file in it
 
@@ -97,8 +133,8 @@ after you finish the training
 ```bash
 uvicorn deployment.app:app --reload --host 0.0.0.0 --port 8000
 ```
-you should be able to curl to test it
-for how to test,see below
+You can now test the API using curl.  
+See the example request below.
 ### run the notebook
 ```bash
 cd notebooks
@@ -147,7 +183,8 @@ docker image rm energy-api
 ```
 
 ## How to Test
-for me i use the command below
+you can freely adjust the order or parameters.  
+the api should inform you what's missing
 ```bash
 curl -X POST "http://127.0.0.1:8000/predict" \
      -H "Content-Type: application/json" \
@@ -182,7 +219,6 @@ curl -X POST "http://127.0.0.1:8000/predict" \
      }'
 ```
 ### Result
-you can freely adjust the order or parameters
 the output should be something like this
 ```bash
 {"prediction":252.16}
