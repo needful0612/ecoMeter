@@ -134,7 +134,7 @@ after you finish the training
 uvicorn deployment.app:app --reload --host 0.0.0.0 --port 8000
 ```
 You can now test the API using curl.  
-See the example request below.
+see **[How to Test](#how-to-test)** section.
 ### run the notebook
 ```bash
 cd notebooks
@@ -156,7 +156,8 @@ run the container
 ```bash
 docker run -d --name named_container -p 8000:8000 energy-api
 ```
-after this you can run the test below
+after this you can run the test below.   
+see **[How to Test](#how-to-test)** section.
 
 ## How to shut down the container
 check what containers are running
@@ -181,6 +182,33 @@ delete the image with REPOSITORY **energy-api**(or whatever you named it)
 ```bash
 docker image rm energy-api
 ```
+
+## Cloud deployment
+
+You can deploy **ecoMeter** to [Railway](https://railway.app/) to serve your FastAPI model in the cloud.  
+
+### Steps
+
+1. **Sign up / login**  
+   - Go to [Railway](https://railway.app/) and log in with your GitHub account.
+
+2. **Connect your repository**  
+   - Create a new project → choose **Deploy from GitHub**.  
+   - Go to **Application Settings** and make sure your GitHub account is connected.  
+   - Select which repository to expose to Railway — choose the `ecoMeter` repository here.  
+   - If your repo doesn’t appear, ensure it’s **public** or properly authorized in Railway’s GitHub integration.
+
+3. **Configure the project**  
+   - Railway will detect the `Dockerfile` automatically.  
+
+4. **Deploy**  
+   - Click **Deploy Project**. Railway will build the Docker image and start your container.  
+   - You can monitor **build logs** and **deployment logs** for errors.
+
+5. **Test API**  
+   - Once deployed, Railway provides a public URL.  
+   - Use `curl` or Postman to send a POST request.  
+   - Update the URL in the **[How to Test](#how-to-test)** section to the Railway-provided endpoint.
 
 ## How to Test
 you can freely adjust the order or parameters.  
